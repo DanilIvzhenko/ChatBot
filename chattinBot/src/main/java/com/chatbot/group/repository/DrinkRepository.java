@@ -23,10 +23,19 @@ public class DrinkRepository {
         }
     }
 
-    public void saveUser(String userId, double amount) {
+    public void resetUser(String userId) {
         try {
             Statement statement = connection.createStatement();
-            statement.executeUpdate("insert into users values (" + userId + "," + amount + ")");
+            statement.executeUpdate("update users set amount = " + 0 + " where user_Id = '" + userId + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveUser(String userId, String userName, double amount) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into users values (" + userId + "," + "'" + userName + "'" + "," + amount + ")");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -39,6 +48,7 @@ public class DrinkRepository {
             ResultSet set = statement.executeQuery("select * from users where user_Id = " + userId);
             if (set.next()) {
                 user.setUserId(set.getString("user_Id"));
+                user.setUserName(set.getString("user_Name"));
                 user.setAmount(set.getDouble("amount"));
             }
         } catch (SQLException e) {
@@ -46,4 +56,6 @@ public class DrinkRepository {
         }
         return user;
     }
+
+
 }

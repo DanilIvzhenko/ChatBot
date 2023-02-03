@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 public class Main {
     private final static Logger log = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         // Create your bot passing the token received from @BotFather
         TelegramBot bot = new TelegramBot(System.getenv("BOT_KEY"));
@@ -24,15 +25,30 @@ public class Main {
         // Register for updates
         bot.setUpdatesListener(updates -> {
             updates.forEach(update -> {
-                if(update.message() != null) {
+                if (update.message() != null) {
                     long groupId = update.message().chat().id();
                     String userId = String.valueOf(update.message().from().id());
+                    String userName = String.valueOf(update.message().from().username());
                     log.info(update);
-                    SendResponse response = bot.execute(new SendMessage(groupId, drinkService.drink(userId)));
-                    log.info(response);
+                    if (update.message().text() != null) {
+                        switch (update.message().text()) {
+                            case "/drink" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.drink(userId, userName)));
+                                log.info(response);
+                            }
+                            case "/list" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, "Ярик Отчисляйся"));
+                                log.info(response);
+                            }
+                            case "/reset" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.reset(userId)));
+                                log.info(response);
+                            }
+                        }
+                    }
                 }
-
             });
+
             // return id of last processed update or confirm them all
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
