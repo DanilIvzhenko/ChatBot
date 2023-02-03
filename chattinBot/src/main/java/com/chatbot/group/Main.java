@@ -37,11 +37,23 @@ public class Main {
                                 log.info(response);
                             }
                             case "/list" -> {
-                                SendResponse response = bot.execute(new SendMessage(groupId, "Ярик Отчисляйся"));
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.getTop()));
                                 log.info(response);
                             }
                             case "/reset" -> {
                                 SendResponse response = bot.execute(new SendMessage(groupId, drinkService.reset(userId)));
+                                log.info(response);
+                            }
+                            case "/help" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, "Доступні команди:\n" +
+                                        "/drink - випити колу\n" +
+                                        "/list - демонструвати топ10\n" +
+                                        "/me - показати сколіки випито літрів коли у вас\n" +
+                                        "/reset - зригнути"));
+                                log.info(response);
+                            }
+                            case "/me" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.getAmount(userId)));
                                 log.info(response);
                             }
                         }

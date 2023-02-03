@@ -40,9 +40,22 @@ public class DrinkService {
         if (user.getUserId() != null) {
             drinkRepository.resetUser(user.getUserId());
             return "Скидаю рахунок до 0 для " + user.getUserName();
-
         } else {
             return "Ти блять хто?";
         }
     }
+
+    public String getAmount(String userId) {
+        User user = drinkRepository.findUser(userId);
+        if (user.getUserId() != null) {
+            return "Ти випив " + user.getAmount() + " літрів";
+        } else {
+            return "Ти блять хто?";
+        }
+    }
+
+    public String getTop() {
+        return drinkRepository.getTop();
+    }
+
 }

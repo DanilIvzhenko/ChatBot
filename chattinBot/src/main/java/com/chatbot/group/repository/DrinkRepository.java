@@ -57,5 +57,17 @@ public class DrinkRepository {
         return user;
     }
 
-
+    public String getTop() {
+        String top = "";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet set = statement.executeQuery("select * from users order by amount desc limit 10");
+            while (set.next()) {
+                top += set.getString("user_Name") + " - " + set.getDouble("amount") + " літрів\n";
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return top;
+    }
 }
