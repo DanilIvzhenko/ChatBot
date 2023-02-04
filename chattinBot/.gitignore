@@ -6,7 +6,22 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# Editor-based HTTP Client requests
+/.idea/dataSources/
+/.idea/compiler.xml
+/.idea/dataSources.local.xml
+/.idea/dataSources.xml
+/.idea/encodings.xml
+/.idea/jarRepositories.xml
+/.idea/jpa-buddy.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/target/
+/.idea/ChatBot.iml
+/.idea/mics.xml
+/.idea/modules.xml
 
-*.class
+/.idea/*.iml
+/.idea/
 
 
