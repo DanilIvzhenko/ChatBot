@@ -14,17 +14,25 @@ public class DrinkService {
     private Random random;
     private DrinkRepository drinkRepository;
 
-    public String drink(String userId, String userName) {
+    public String drink(String userId, String userName, int timestamp) {
         User user = drinkRepository.findUser(userId);
         double amount = random.nextInt(-50, 200) / 10;
         double sum = amount;
         boolean showAd = random.nextBoolean();
+        int lastDrankAt = user.getTimestamp();
+        int elapsed = (int) ((System.currentTimeMillis() / 1000) - lastDrankAt);
         if (user.getUserId() != null) {
-            sum = amount + user.getAmount();
-            user.setAmount(sum);
-            drinkRepository.updateUser(user.getUserId(), user.getAmount());
+            if (elapsed > 14400) {
+                sum = amount + user.getAmount();
+                user.setAmount(sum);
+                user.setTimestamp(timestamp);
+                drinkRepository.updateUser(user.getUserId(), user.getAmount(), user.getTimestamp());
+            } else {
+                return "@" + userName + ", зачекай ще " + ((14400 - elapsed)/60) + " хвилин";
+            }
+
         } else {
-            drinkRepository.saveUser(userId, userName, amount);
+            drinkRepository.saveUser(userId, userName, amount, timestamp);
         }
 
         if (showAd) {
@@ -58,4 +66,7 @@ public class DrinkService {
         return drinkRepository.getTop();
     }
 
+    public String getPublicTop() {
+        return drinkRepository.getPublicTop();
+    }
 }

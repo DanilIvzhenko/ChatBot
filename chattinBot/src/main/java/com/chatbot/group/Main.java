@@ -32,28 +32,40 @@ public class Main {
                     log.info(update);
                     if (update.message().text() != null) {
                         switch (update.message().text()) {
-                            case "/drink" -> {
-                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.drink(userId, userName)));
+                            case "/drink", "/drink@alldrink_bot" -> {
+                                int timestamp = update.message().date();
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.drink(userId, userName, timestamp)));
                                 log.info(response);
                             }
-                            case "/list" -> {
+                            case "/list", "/list@alldrink_bot" -> {
                                 SendResponse response = bot.execute(new SendMessage(groupId, drinkService.getTop()));
                                 log.info(response);
                             }
-                            case "/reset" -> {
+                            case "/public", "/public@alldrink_bot" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, drinkService.getPublicTop()));
+                                log.info(response);
+                            }
+                            case "/reset", "/reset@alldrink_bot" -> {
                                 SendResponse response = bot.execute(new SendMessage(groupId, drinkService.reset(userId)));
                                 log.info(response);
                             }
-                            case "/help" -> {
+                            case "/help", "/help@alldrink_bot" -> {
                                 SendResponse response = bot.execute(new SendMessage(groupId, "Доступні команди:\n" +
                                         "/drink - випити колу\n" +
                                         "/list - демонструвати топ10\n" +
+                                        "/public - демонструвати топ100\n" +
                                         "/me - показати сколіки випито літрів коли у вас\n" +
                                         "/reset - зригнути"));
                                 log.info(response);
                             }
-                            case "/me" -> {
+                            case "/me", "/me@alldrink_bot" -> {
                                 SendResponse response = bot.execute(new SendMessage(groupId, drinkService.getAmount(userId)));
+                                log.info(response);
+                            }
+                            case "/start", "/start@alldrink_bot" -> {
+                                SendResponse response = bot.execute(new SendMessage(groupId, "Привіт, я бот, " +
+                                        "який відстежує кількість випитої коли. Для того щоб почати використовуй " +
+                                        "команду /drink , щоб дізнатися більше використовуй команду /help"));
                                 log.info(response);
                             }
                         }

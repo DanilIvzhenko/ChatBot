@@ -5,11 +5,13 @@ public class User {
     String userId;
     String userName;
     double amount;
+    int timestamp;
 
-    public User(String userId, String userName, double amount) {
+    public User(String userId, String userName, double amount, int timestamp) {
         this.userId = userId;
         this.userName = userName;
         this.amount = amount;
+        this.timestamp = timestamp;
     }
     public User() {}
 
@@ -34,4 +36,8 @@ public class User {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public int getTimestamp() { return timestamp; }
+
+    public void setTimestamp(int timestamp) { this.timestamp = timestamp; }
 }
