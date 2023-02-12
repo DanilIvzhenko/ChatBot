@@ -34,9 +34,9 @@ public class DrinkService {
         } else {
             drinkRepository.saveUser(userId, userName, amount, timestamp);
         }
-
         if (showAd) {
-            return "@" + userName + ", ти випив " + amount + " літрів коли 🥤.\nЗагалом ти випив " + sum + " літрів.\nПідпишись на @geekpartylab";
+            return "@" + userName + ", ти випив " + amount + " літрів коли 🥤.\nЗагалом ти випив " + sum + " " +
+                    "літрів.\nПідпишись на @geekpartylab";
         } else {
             return "@" + userName + ", ти випив " + amount + " літрів коли 🥤.\nЗагалом ти випив " + sum + " літрів.";
         }
